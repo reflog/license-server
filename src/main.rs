@@ -83,7 +83,7 @@ fn generate(
         m.insert(e.0.to_string(), e.1.to_string());
     });
     let license = model::License {
-        id: uuid::Uuid::new_v4().to_string(),
+        id: Some(uuid::Uuid::new_v4().to_string()),
         meta: m,
         valid_from: actual_from.format(model::DATE_FORMAT).to_string(),
         valid_until: actual_to.format(model::DATE_FORMAT).to_string(),

@@ -12,7 +12,7 @@ pub(crate) const DATE_FORMAT: &str = "%Y-%m-%d";
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub(crate) struct License {
-    pub(crate) id: String,
+    pub(crate) id: Option<String>,
     pub(crate) meta: HashMap<String, String>,
     pub(crate) valid_from: String,
     pub(crate) valid_until: String,
@@ -54,7 +54,7 @@ impl License {
         let mut parts: Vec<String> = vec![];
         parts.push(self.valid_from.to_string());
         parts.push(self.valid_until.to_string());
-        parts.push(self.id.to_string());
+        parts.push(self.id.as_ref().expect("license missing id").to_string());
         self.meta.iter().for_each(|e| parts.push(e.1.to_string()));
         let to_hash = parts.join("\n");
         let mut mac = HmacSha256::new_varkey(secret.as_bytes()).map_err(|_| "invalid hash")?;
@@ -86,7 +86,7 @@ mod tests {
     #[test]
     fn test_generate() {
         let license = model::License {
-            id: "123".to_string(),
+            id: None,
             meta: Default::default(),
             valid_from: "1-2-3".to_string(),
             valid_until: "1-2-4".to_string(),
