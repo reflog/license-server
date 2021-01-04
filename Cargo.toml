@@ -9,15 +9,15 @@ license = "MIT"
 
 [dependencies]
 structopt = "0.3"
-sha2 = ""
-hmac = ""
+sha2 = "0.9.2"
+hmac = "0.10.1"
 serde = { version = "1.0", features = ["derive"] }
-serde_json =""
-base64=""
-chrono = ""
-itertools  = ""
-dotenv = ""
+serde_json = "1.0.61"
+base64 = "0.13.0"
+chrono = "0.4.19"
+itertools = "0.10.0"
+dotenv = "0.15.0"
 tokio = { version = "0.2", features = ["full"] }
 warp = "0.2"
-pretty_env_logger = ""
+pretty_env_logger = "0.4.0"
 uuid = { version = "0.8", features = ["serde", "v4"] }
