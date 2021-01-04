@@ -1,0 +1,22 @@
+[package]
+name = "license-server"
+version = "0.1.0"
+authors = ["Eli Yukelzon <reflog@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+structopt = "0.3"
+sha2 = ""
+hmac = ""
+serde = { version = "1.0", features = ["derive"] }
+serde_json =""
+base64=""
+chrono = ""
+itertools  = ""
+dotenv = ""
+tokio = { version = "0.2", features = ["full"] }
+warp = "0.2"
+pretty_env_logger = ""
+uuid = { version = "0.8", features = ["serde", "v4"] }
