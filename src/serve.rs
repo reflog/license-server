@@ -92,7 +92,7 @@ pub(crate) async fn serve(secret: String, api_key: String, port: u16) {
 
     let generate_path = api_generate(secret, api_key);
     let validate_path = api_validate(secret_copy);
-    println!("Listing on {:}", port);
+    println!("Listening on {:}", port);
 
     let shutdown = async {
         tokio::signal::ctrl_c()
@@ -100,7 +100,7 @@ pub(crate) async fn serve(secret: String, api_key: String, port: u16) {
             .expect("failed to install CTRL+C signal handler");
     };
     let (_, serving) = warp::serve(validate_path.or(generate_path).recover(handle_rejection))
-        .bind_with_graceful_shutdown(([127, 0, 0, 1], port), shutdown);
+        .bind_with_graceful_shutdown(([0, 0, 0, 0], port), shutdown);
     tokio::select! {
         _ = serving => {},
     }
