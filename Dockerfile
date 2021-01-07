@@ -21,4 +21,4 @@ ENV LICENSE_API_KEY=
 ENV HMAC_SECRET=
 COPY --from=builder /usr/src/myprogram/target/x86_64-unknown-linux-musl/release/license-server .
 USER 1000
-CMD ["./license-server"]
+CMD ["./license-server", "serve"]
