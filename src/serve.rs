@@ -94,7 +94,10 @@ pub(crate) async fn serve(secret: String, api_key: String, port: u16) {
     let validate_path = api_validate(secret_copy);
     println!("Listening on {:}", port);
 
-    let cors = warp::cors().allow_methods(&[warp::http::Method::POST]);
+    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_methods(&[warp::http::Method::POST])
+        .allow_headers(vec!["x-api-key", "content-type"]);
 
     let shutdown = async {
         tokio::signal::ctrl_c()
