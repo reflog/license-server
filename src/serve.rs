@@ -94,13 +94,20 @@ pub(crate) async fn serve(secret: String, api_key: String, port: u16) {
     let validate_path = api_validate(secret_copy);
     println!("Listening on {:}", port);
 
+    let cors = warp::cors().allow_methods(&[warp::http::Method::POST]);
+
     let shutdown = async {
         tokio::signal::ctrl_c()
             .await
             .expect("failed to install CTRL+C signal handler");
     };
-    let (_, serving) = warp::serve(validate_path.or(generate_path).recover(handle_rejection))
-        .bind_with_graceful_shutdown(([0, 0, 0, 0], port), shutdown);
+    let (_, serving) = warp::serve(
+        validate_path
+            .or(generate_path)
+            .with(cors)
+            .recover(handle_rejection),
+    )
+    .bind_with_graceful_shutdown(([0, 0, 0, 0], port), shutdown);
     tokio::select! {
         _ = serving => {},
     }
