@@ -55,7 +55,10 @@ impl License {
         parts.push(self.valid_from.to_string());
         parts.push(self.valid_until.to_string());
         parts.push(self.id.as_ref().expect("license missing id").to_string());
-        self.meta.iter().for_each(|e| parts.push(e.1.to_string()));
+        self.meta
+            .keys()
+            .sorted()
+            .for_each(|e| parts.push(self.meta[e].to_string()));
         let to_hash = parts.join("\n");
         let mut mac = HmacSha256::new_varkey(secret.as_bytes()).map_err(|_| "invalid hash")?;
         mac.update(to_hash.as_bytes());

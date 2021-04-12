@@ -7,7 +7,9 @@ const parts = [];
 parts.push(d['license']['valid_from']);
 parts.push(d['license']['valid_until']);
 parts.push(d['license']['id']);
-Object.values(d['license']['meta']).forEach(v => parts.push(v));
+const keys = Object.keys(d['license']['meta']).map(k => k);
+keys.sort();
+keys.forEach(v => parts.push(d['license']['meta'][v]));
 
 const to_hash = parts.join("\n");
 
